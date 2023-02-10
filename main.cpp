@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "inputVerification.hpp"
+
 using std::vector,std::string;
 
 class Board{
@@ -10,6 +12,9 @@ private:
 public:
     Board(int Size){
         size = Size;
+    }
+    vector<int> ShipPositions(){
+
     }
     void printRow(int out){
         int space = 0;
@@ -31,6 +36,7 @@ public:
         printRow(0);
     }
     void printBoard(){
+    
         int row = 0;
         while(row < size-1){
             printGameRow();
@@ -40,11 +46,13 @@ public:
         printRow(2);
         printRow(2);
     }
+
+
 };
 
 int main(){
-    std::cout << "Enter Board Size: ";
-    int size; std::cin >> size;
+    int size;
+    size = verifyInputs("How big do you want the board to be?");
     Board Player1 = Board(size);
     Player1.printBoard();
     system("pause");
