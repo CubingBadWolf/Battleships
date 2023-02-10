@@ -11,24 +11,7 @@ private:
     int size; // dimensions of square board
     string ListOfShips[5][2] = {{"Carrier", "5"},{"Battleship", "4"},{"Submarine","3"},{"Cruiser","3"},{"Destroyer","2"}};
 
-public:
-    Board(int Size){
-        //Class constructor
-        size = Size;
-    }
-    vector<vector<char>> gameboard;
-    void ShipPlacer(){
-        vector<vector<char>> backendBoard(size, vector<char>(size));
-        for (int i = 0; i < size; i++){
-            for (int j = 0; j < size; j++){
-                backendBoard[i][j] = '0';
-            }
-        } //Creates a 2 dimensional vector with blank chars inside it
-        gameboard = backendBoard;
-        
-
-    }
-
+protected:
     void printRow(int out){
         //prints the individual subrows of the gameboard
         int space = 0;
@@ -39,7 +22,6 @@ public:
             }
             space++;
         }
-    
         std::cout << std::endl;
 
     }
@@ -63,6 +45,23 @@ public:
         printMiddleRow(gameboard,rownNum);
         printRow(0);
     }
+public:
+    Board(int Size){
+        //Class constructor
+        size = Size;
+    }
+    vector<vector<char>> gameboard;
+    void ShipPlacer(){
+        vector<vector<char>> backendBoard(size, vector<char>(size));
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j < size; j++){
+                backendBoard[i][j] = '0';
+            }
+        } //Creates a 2 dimensional vector with blank chars inside it
+        gameboard = backendBoard;
+    }
+
+    
     void printBoard(){
         //prints all the rows into a board
         int row = 0;
@@ -82,8 +81,13 @@ int main(){
     int size;
     size = verifyInputs("How big do you want the board to be?");
     Board Player1 = Board(size);
+    Board Player2 = Board(size);
+    
     Player1.ShipPlacer();
     Player1.printBoard();
+    Player2.ShipPlacer();
+    Player2.printBoard();
+    
     system("pause");
     return 0;
 }
