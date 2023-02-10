@@ -39,10 +39,10 @@ protected:
     
         std::cout << std::endl;
     }
-    void printGameRow(int rownNum){
+    void printGameRow(vector<vector<char>> Board,int rownNum){
         //Prints the subrows into a game row
         printRow(2);
-        printMiddleRow(gameboard,rownNum);
+        printMiddleRow(Board,rownNum);
         printRow(0);
     }
 public:
@@ -51,26 +51,36 @@ public:
         size = Size;
     }
     vector<vector<char>> gameboard;
+    vector<vector<char>> playboard;
     void ShipPlacer(){
         vector<vector<char>> backendBoard(size, vector<char>(size));
-        for (int i = 0; i < size; i++){
-            for (int j = 0; j < size; j++){
-                backendBoard[i][j] = '0';
+        for (int q = 0; q < 2; q++){  
+            for (int i = 0; i < size; i++){
+                for (int j = 0; j < size; j++){
+                    backendBoard[i][j] = '0';
+                }
+            } //Creates a 2 dimensional vector with blank chars inside it
+            if(q == 0){
+                gameboard = backendBoard;
             }
-        } //Creates a 2 dimensional vector with blank chars inside it
-        gameboard = backendBoard;
+            else{
+                playboard = backendBoard;
+            }
+        } // Initalised the two boards in the class.
+
+
     }
 
     
-    void printBoard(){
+    void printBoard(vector<vector<char>> Board){
         //prints all the rows into a board
         int row = 0;
         while(row < size-1){
-            printGameRow(row);
+            printGameRow(Board, row);
             row++;
         }
         printRow(2);
-        printMiddleRow(gameboard,row);
+        printMiddleRow(Board,row);
         printRow(2);
     }
 
@@ -84,9 +94,7 @@ int main(){
     Board Player2 = Board(size);
     
     Player1.ShipPlacer();
-    Player1.printBoard();
-    Player2.ShipPlacer();
-    Player2.printBoard();
+    Player1.printBoard(Player1.gameboard);
     
     system("pause");
     return 0;
