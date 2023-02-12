@@ -62,6 +62,8 @@ public:
             } //Creates a 2 dimensional vector with blank chars inside it
             if(q == 0){
                 gameboard = backendBoard;
+                gameboard[size/2][size/2] = '*';//showing single element can be changed in one board.
+
             }
             else{
                 playboard = backendBoard;
@@ -94,8 +96,11 @@ int main(){
     Board Player2 = Board(size);
     
     Player1.ShipPlacer();
+    std::cout << "GameBoard" << std::endl;
     Player1.printBoard(Player1.gameboard);
-    
+    std::cout << "PlayingBoard" << std::endl;
+    Player1.printBoard(Player1.playboard);
+
     system("pause");
     return 0;
 }
