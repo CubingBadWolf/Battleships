@@ -107,28 +107,23 @@ public:
             }
         }
         else{
-            try{
-                if (xval +(direction/2 * std::stoi(ship[2]) < 0)){
-                    throw(418);
-                }
-            }
-            catch(...){
+            if (xval -(direction * std::stoi(ship[2]) < 0)){
                 std::cout << "Ship cannot be placed at those coords with that direction, please try again" << std::endl;
-                return 0;
             }
+            
             for(int i = 0; i <std::stoi(ship[2]); i++){
                 if (direction < 0){
                     gameboard[yval][xval-i] = char(ship[1][0]);
                 }
                 else{
-                    gameboard[yval][xval-i] = char(ship[1][0]);
+                    gameboard[yval][xval+i] = char(ship[1][0]);
                 }
             }
         }
        return 1;
     }
     void printBoard(vector<vector<char>> Board){
-        //prints all the rows into a board
+        //prints all the rows into a board11
         int row = 0;
         while(row < size-1){
             printGameRow(Board, row);
@@ -151,12 +146,11 @@ int main(){
     Player1.BoardInit();
     std::cout << "GameBoard" << std::endl;
     Player1.printBoard(Player1.gameboard);
-    Player1.PlaceShip(Player1.ListOfShips[0], -2);
+    Player1.PlaceShip(Player1.ListOfShips[0], -1);
     Player1.printBoard(Player1.gameboard);
 
     /*std::cout << "PlayingBoard" << std::endl;
     Player1.printBoard(Player1.playboard);*/
-
     system("pause");
     return 0;
 }
