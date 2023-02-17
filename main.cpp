@@ -71,7 +71,7 @@ public:
     }
 
     int PlaceShip(vector<string> ship){ //direction keys = -2 down, 2 up, -1 left, 1 right
-    //TODO placed ships cant overlap other ships already placed
+    //TODO placed ships cant overlap other ships already placed, also left and right not working as intended to fix
         int xval;int yval;
         int direction;
         while (true){
@@ -171,19 +171,20 @@ int main(){
             std::cout << i << ": "; for (string c: Player1.ListOfShips[i]){std::cout << c; }; std::cout << std::endl;
         }
         while (true){
-        int choice; 
-        choice = verifyInputs("Player 1 please select which ship you would like to place");
-        if (choice < 0 || choice > Player1.ListOfShips.size()){
-            std::cout << "Please enter a valid choice" << std::endl;
+            int choice; 
+            choice = verifyInputs("Player 1 please select which ship you would like to place");
+            if (choice < 0 || choice > Player1.ListOfShips.size()){
+                std::cout << "Please enter a valid choice" << std::endl;
+            }
+            else{
+                Player1.PlaceShip(Player1.ListOfShips[choice]);
+                Player1.ListOfShips.erase(Player1.ListOfShips.begin()+choice);
+                Player1.printBoard(Player1.gameboard);
+                break;
+            }
         }
-        else{
-            Player1.PlaceShip(Player1.ListOfShips[choice]);
-            Player1.ListOfShips.erase(Player1.ListOfShips.begin()+choice);
-            break;
-        }
-        }
+        
     }
-    Player1.printBoard(Player1.gameboard);
 
     /*std::cout << "PlayingBoard" << std::endl;
     Player1.printBoard(Player1.playboard);*/
