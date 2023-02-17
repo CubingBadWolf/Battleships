@@ -70,8 +70,10 @@ public:
         } // Initalised the two boards in the class.
     }
 
-    int PlaceShip(vector<string> ship, int direction){ //direction keys = -2 down, 2 up, -1 left, 1 right
+    int PlaceShip(vector<string> ship){ //direction keys = -2 down, 2 up, -1 left, 1 right
+    //TODO placed ships cant overlap other ships already placed
         int xval;int yval;
+        int direction;
         while (true){
             xval = verifyInputs("Enter the x coordinate to begin placing: ");
             if (xval < 0 || xval > size -1){
@@ -90,7 +92,23 @@ public:
                 break;
             }
         }
-
+        int ValidDirections[4] = {-2,-1,1,-2};
+        string Directions[4] = {"down", "left", "right", "up"};
+        bool check = true;
+        while (check){
+            std::cout << "Enter the direction you want to enter the ship in from the coords " << xval << ',' << yval << std::endl;
+            for (int i =0; i < 4; i++){
+                std::cout << ValidDirections[i] << ": " << Directions[i] << std::endl;
+            }
+            direction = verifyInputs("");
+            for(int i = 0; i < 4; i++){
+                if(ValidDirections[i] == direction){
+                    check = false;
+                    break;
+                }
+            std::cout << "Enter a valid direction {-2,-1,1,2}" << std::endl;
+}
+        }
         if (direction % 2 == 0){
             if (yval -(direction/2 * std::stoi(ship[2])) < 0){
                 std::cout << "Ship cannot be placed at those coords with that direction, please try again" << std::endl;
@@ -109,6 +127,7 @@ public:
         else{
             if (xval -(direction * std::stoi(ship[2]) < 0)){
                 std::cout << "Ship cannot be placed at those coords with that direction, please try again" << std::endl;
+                return 0;
             }
             
             for(int i = 0; i <std::stoi(ship[2]); i++){
@@ -146,7 +165,24 @@ int main(){
     Player1.BoardInit();
     std::cout << "GameBoard" << std::endl;
     Player1.printBoard(Player1.gameboard);
-    Player1.PlaceShip(Player1.ListOfShips[0], -1);
+    while(Player1.ListOfShips.size() != 0){
+        std::cout << "Here are the available ships {Name, Character, Size}" << std::endl;
+        for (int i = 0; i < Player1.ListOfShips.size(); i++){
+            std::cout << i << ": "; for (string c: Player1.ListOfShips[i]){std::cout << c; }; std::cout << std::endl;
+        }
+        while (true){
+        int choice; 
+        choice = verifyInputs("Player 1 please select which ship you would like to place");
+        if (choice < 0 || choice > Player1.ListOfShips.size()){
+            std::cout << "Please enter a valid choice" << std::endl;
+        }
+        else{
+            Player1.PlaceShip(Player1.ListOfShips[choice]);
+            Player1.ListOfShips.erase(Player1.ListOfShips.begin()+choice);
+            break;
+        }
+        }
+    }
     Player1.printBoard(Player1.gameboard);
 
     /*std::cout << "PlayingBoard" << std::endl;
