@@ -92,7 +92,7 @@ public:
                 break;
             }
         }
-        int ValidDirections[4] = {-2,-1,1,-2};
+        int ValidDirections[4] = {-2,-1,1,2};
         string Directions[4] = {"down", "left", "right", "up"};
         bool check = true;
         while (check){
