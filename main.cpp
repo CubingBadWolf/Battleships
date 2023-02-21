@@ -106,6 +106,9 @@ public:
                     check = false;
                     break;
                 }
+            if (!check){
+                break;
+            }
             std::cout << "Enter a valid direction {-2,-1,1,2}" << std::endl;
 }
         }
@@ -125,7 +128,8 @@ public:
             }
         }
         else{
-            if (xval -(direction * std::stoi(ship[2]) < 0)){
+            std::cout << xval + (direction * std::stoi(ship[2])) << std::endl;
+            if (xval + (direction * std::stoi(ship[2])) < 0){
                 std::cout << "Ship cannot be placed at those coords with that direction, please try again" << std::endl;
                 return 0;
             }
@@ -177,8 +181,12 @@ int main(){
                 std::cout << "Please enter a valid choice" << std::endl;
             }
             else{
-                Player1.PlaceShip(Player1.ListOfShips[choice]);
-                Player1.ListOfShips.erase(Player1.ListOfShips.begin()+choice);
+                if (Player1.PlaceShip(Player1.ListOfShips[choice]) != 0){
+                    Player1.ListOfShips.erase(Player1.ListOfShips.begin()+choice);
+                }
+                else{
+                    continue;
+                }
                 Player1.printBoard(Player1.gameboard);
                 break;
             }
