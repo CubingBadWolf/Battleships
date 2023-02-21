@@ -250,7 +250,15 @@ public:
 
 int main(){
     int size;
-    size = verifyInputs("How big do you want the board to be?");
+    while (true){
+        size = verifyInputs("How big do you want the board to be? min 5x5");
+        if (size < 5){
+            std::cout << "Board too small" << std::endl;
+        }
+        else{
+            break;
+        }
+    }
     Board Player1 = Board(size);
     Board Player2 = Board(size);
     
@@ -316,14 +324,15 @@ int main(){
         Player2.ReceiveFire(coordinates);
         if (Player2.sunken == 5){
             std::cout << "Player 1 wins" << std::endl;
+            break;
         }
-        vector<int> coordinates;
         std::cout << "Player 2 here is your board to play on" << std::endl;
         Player2.printBoard(Player2.playboard);
         coordinates = Player2.Fire(Player1.gameboard);
         Player1.ReceiveFire(coordinates);
         if (Player1.sunken == 5){
             std::cout << "Player 2 wins" << std::endl;
+            break;
         }
     }
 
