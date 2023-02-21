@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 #include "inputVerification.hpp"
+#include <set>
+#include <algorithm>
 
 using std::vector,std::string;
 
@@ -9,7 +11,6 @@ class Board{
 private:
     char BoardOutputs[3] = {'_','|',' '}; // Grid characters
     int size; // dimensions of square board
-
 protected:
     void printRow(int out){
         //prints the individual subrows of the gameboard
@@ -46,6 +47,8 @@ protected:
     }
 public:
     vector<vector<string>> ListOfShips = {{"Carrier", "C", "5"},{"Battleship", "B", "4"},{"Submarine", "S","3"},{"Cruiser", "c", "3"},{"Destroyer", "D", "2"}};
+    int sunken = 0;
+
     Board(int Size){
         //Class constructor
         size = Size;
@@ -192,17 +195,42 @@ public:
         }
         std::cout << "Ships firing at " << xval << ',' << yval << std::endl;
         vector<int> coords = {xval,yval};
-
-        if(OpposingBoard[yval][xval] != ' '){
+        if (OpposingBoard[yval][xval] == '0' || OpposingBoard[yval][xval] == '*'){
+            std::cout << "You have already fired there" << std::endl;
+            return Fire(OpposingBoard);
+        }
+        else if(OpposingBoard[yval][xval] != ' '){
             std::cout << "HIT" << std::endl;
+            playboard[yval][xval] = '*';
         }
         else{
             std::cout << "MISS" << std::endl;
+            playboard[yval][xval] = '0';
+
         }
         return coords;  
     }
-    bool ReceiveFire(vector<int> coords){
+    void ReceiveFire(vector<int> coords){
+        vector<char> temp;
+        char checker;
+        
         //take input coods and return make changes based on hits /misses if no chars of type remain return sunk for that ship
+        if(gameboard[coords[1]][coords[0]] != ' '){
+            checker = gameboard[coords[1]][coords[0]];
+            gameboard[coords[1]][coords[0]] = '*';
+            for (int i = 0; i < gameboard.size(); i++){
+                for (int j = 0; j < gameboard.size(); j++){
+                    temp.push_back(gameboard[i][j]);
+            }
+            }
+            if (std::count(temp.begin(),temp.end(),checker) == 0){
+                std::cout << "Ship is sunk" << std::endl;
+                sunken++;
+            }
+        }
+        else{
+            gameboard[coords[1]][coords[0]] == '0';
+        }
     }
     
     void printBoard(vector<vector<char>> Board){
@@ -251,7 +279,52 @@ int main(){
                 break;
             }
         }
-        
+    }
+
+    Player2.BoardInit();
+    std::cout << "GameBoard" << std::endl;
+    Player2.printBoard(Player2.gameboard);
+    while(Player2.ListOfShips.size() != 0){
+        std::cout << "Here are the available ships {Name, Character, Size}" << std::endl;
+        for (int i = 0; i < Player2.ListOfShips.size(); i++){
+            std::cout << i << ": "; for (string c: Player2.ListOfShips[i]){std::cout << c; }; std::cout << std::endl;
+        }
+        while (true){
+            int choice; 
+            choice = verifyInputs("Player 1 please select which ship you would like to place");
+            if (choice < 0 || choice > Player2.ListOfShips.size()){
+                std::cout << "Please enter a valid choice" << std::endl;
+            }
+            else{
+                if (Player2.PlaceShip(Player2.ListOfShips[choice]) != 0){
+                    Player2.ListOfShips.erase(Player2.ListOfShips.begin()+choice);
+                }
+                else{
+                    continue;
+                }
+                Player2.printBoard(Player2.gameboard);
+                break;
+            }
+        }
+    }
+
+    while(Player1.sunken != 5 || Player2.sunken != 5){
+        vector<int> coordinates;
+        std::cout << "Player 1 here is your board to play on" << std::endl;
+        Player1.printBoard(Player1.playboard);
+        coordinates = Player1.Fire(Player2.gameboard);
+        Player2.ReceiveFire(coordinates);
+        if (Player2.sunken == 5){
+            std::cout << "Player 1 wins" << std::endl;
+        }
+        vector<int> coordinates;
+        std::cout << "Player 2 here is your board to play on" << std::endl;
+        Player2.printBoard(Player2.playboard);
+        coordinates = Player2.Fire(Player1.gameboard);
+        Player1.ReceiveFire(coordinates);
+        if (Player1.sunken == 5){
+            std::cout << "Player 2 wins" << std::endl;
+        }
     }
 
     /*std::cout << "PlayingBoard" << std::endl;
