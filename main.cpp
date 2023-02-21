@@ -129,7 +129,7 @@ public:
         }
         else{
             std::cout << xval + (direction * std::stoi(ship[2])) << std::endl;
-            if (xval + (direction * std::stoi(ship[2])) < 0){
+            if (xval + (direction * std::stoi(ship[2]) ) < 0){
                 std::cout << "Ship cannot be placed at those coords with that direction, please try again" << std::endl;
                 return 0;
             }
