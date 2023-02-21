@@ -71,7 +71,6 @@ public:
     }
 
     int PlaceShip(vector<string> ship){ //direction keys = -2 down, 2 up, -1 left, 1 right
-    //TODO placed ships cant overlap other ships already placed, also left and right not working as intended to fix
         int xval;int yval;
         int direction;
         while (true){
@@ -170,6 +169,42 @@ public:
         }
        return 1;
     }
+    
+    vector<int> Fire(vector<vector<char>> OpposingBoard){ 
+        int xval;int yval;
+        while (true){
+            xval = verifyInputs("Enter the x coordinate to fire at: ");
+            if (xval < 0 || xval > size -1){
+                std::cout << "Please enter a valid number" << std::endl;
+            }
+            else{
+                break;
+            }
+        }
+        while (true){
+            yval = verifyInputs("Enter the y coordinate to fire at: ");
+            if (yval < 0 || yval > size -1){
+                std::cout << "Please enter a valid number" << std::endl;
+            }
+            else{
+                break;
+            }
+        }
+        std::cout << "Ships firing at " << xval << ',' << yval << std::endl;
+        vector<int> coords = {xval,yval};
+
+        if(OpposingBoard[yval][xval] != ' '){
+            std::cout << "HIT" << std::endl;
+        }
+        else{
+            std::cout << "MISS" << std::endl;
+        }
+        return coords;  
+    }
+    bool ReceiveFire(vector<int> coords){
+        //take input coods and return make changes based on hits /misses if no chars of type remain return sunk for that ship
+    }
+    
     void printBoard(vector<vector<char>> Board){
         //prints all the rows into a board11
         int row = 0;
