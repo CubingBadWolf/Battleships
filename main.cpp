@@ -108,65 +108,69 @@ public:
                     check = false;
                     break;
                 }
+            }
             if (!check){
                 break;
             }
             else{
                 std::cout << "Enter a valid direction {-2,-1,1,2}" << std::endl;
             }
-}
         }
         if (direction % 2 == 0){
-            if (yval -(direction/2 * std::stoi(ship[2])) < 0){
+            std::cout << yval -(direction/2 * std::stoi(ship[2]));
+            if (yval -(direction/2 * std::stoi(ship[2]) -1) < 0 || yval - (direction/2 * std::stoi(ship[2])) > size){
                 std::cout << "Ship cannot be placed at those coords with that direction, please try again" << std::endl;
                 return 0;
                 }                 
-
-            for(int i = 0; i <std::stoi(ship[2]); i++){
+            for (int i = 0; i <std::stoi(ship[2]); i++){
                 if (direction < 0){
                     if (gameboard[yval+i][xval] != ' '){
                         std::cout << "Ships can not be placed over each other" << std::endl;
                         return 0;
                     }
-                    else{
-                        gameboard[yval+i][xval] = char(ship[1][0]);
-                    }
                 }
                 else{
-                    if (gameboard[yval-i][xval] != ' '){
+                   if (gameboard[yval-i][xval] != ' '){
                         std::cout << "Ships can not be placed over each other" << std::endl;
                         return 0;
-                    }
-                    else{
-                        gameboard[yval-i][xval] = char(ship[1][0]);
-                    }
+                    } 
+                }
+            }
+            for(int i = 0; i <std::stoi(ship[2]); i++){
+                if (direction < 0){
+                    gameboard[yval+i][xval] = char(ship[1][0]);
+                }
+                else{
+                    gameboard[yval-i][xval] = char(ship[1][0]);
                 }
             }
         }
         else{
-            if (xval + (direction * std::stoi(ship[2]) ) < 0){
+            std::cout << xval+1 + (direction * std::stoi(ship[2]) );
+            if (xval+1 + (direction * std::stoi(ship[2]) ) < 0 || xval + (direction * std::stoi(ship[2]) ) > size){
                 std::cout << "Ship cannot be placed at those coords with that direction, please try again" << std::endl;
                 return 0;
             }
-            
-            for(int i = 0; i <std::stoi(ship[2]); i++){
+            for (int i = 0; i <std::stoi(ship[2]); i++){
                 if (direction < 0){
                     if (gameboard[yval][xval-i] != ' '){
                         std::cout << "Ships can not be placed over each other" << std::endl;
                         return 0;
                     }
-                    else{
-                        gameboard[yval][xval-i] = char(ship[1][0]);
-                    }
                 }
                 else{
-                    if (gameboard[yval][xval+i] != ' '){
+                   if (gameboard[yval][xval+i] != ' '){
                         std::cout << "Ships can not be placed over each other" << std::endl;
                         return 0;
-                    }
-                    else{
-                        gameboard[yval][xval+i] = char(ship[1][0]);
-                    }
+                    } 
+                }
+            }
+            for(int i = 0; i <std::stoi(ship[2]); i++){
+                if (direction < 0){
+                    gameboard[yval][xval-i] = char(ship[1][0]);
+                }
+                else{
+                    gameboard[yval][xval+i] = char(ship[1][0]);
                 }
             }
         }
@@ -235,6 +239,7 @@ public:
     
     void printBoard(vector<vector<char>> Board){
         //prints all the rows into a board11
+        std::cout << std::endl;
         int row = 0;
         while(row < size-1){
             printGameRow(Board, row);
