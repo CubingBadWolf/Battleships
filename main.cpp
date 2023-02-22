@@ -299,7 +299,7 @@ int main(){
         }
         while (true){
             int choice; 
-            choice = verifyInputs("Player 1 please select which ship you would like to place");
+            choice = verifyInputs("Player 2 please select which ship you would like to place");
             if (choice < 0 || choice > Player2.ListOfShips.size()){
                 std::cout << "Please enter a valid choice" << std::endl;
             }
