@@ -12,8 +12,9 @@ private:
     char BoardOutputs[3] = {'_','|',' '}; // Grid characters
     int size; // dimensions of square board
 protected:
-    void printRow(int out){
+    void printRow(int out, bool nums){
         //prints the individual subrows of the gameboard
+        //Nums will place grid markers in bottom row only, TODO place nums in collumn 0 as well
         int space = 0;
         while(space < size){
             std::cout << string(3, BoardOutputs[out]);
@@ -41,9 +42,9 @@ protected:
     }
     void printGameRow(vector<vector<char>> Board,int rownNum){
         //Prints the subrows into a game row
-        printRow(2);
+        printRow(2, false);
         printMiddleRow(Board,rownNum);
-        printRow(0);
+        printRow(0, false);
     }
 public:
     vector<vector<string>> ListOfShips = {{"Carrier", "C", "5"},{"Battleship", "B", "4"},{"Submarine", "S","3"},{"Cruiser", "c", "3"},{"Destroyer", "D", "2"}};
@@ -245,9 +246,9 @@ public:
             printGameRow(Board, row);
             row++;
         }
-        printRow(2);
+        printRow(2, false);
         printMiddleRow(Board,row);
-        printRow(2);
+        printRow(2, true);
     }
 
 
