@@ -2,7 +2,6 @@
 #include <string>
 #include <vector>
 #include "inputVerification.hpp"
-#include <set>
 #include <algorithm>
 
 using std::vector,std::string;
@@ -14,7 +13,7 @@ private:
 protected:
     void printRow(int out, bool nums){
         //prints the individual subrows of the gameboard
-        //Nums will place grid markers in bottom row only, TODO place nums in collumn 0 as well
+        //Nums will place grid markers in bottom row only, TODO place nums in collumn 0 as
         int space = 0;
         while(space < size){
             std::cout << string(3, BoardOutputs[out]);
